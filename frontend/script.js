@@ -35,23 +35,6 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     showResult('loginResult', data);
 });
 
-document.getElementById('createEventForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = document.getElementById('eventName').value;
-    const description = document.getElementById('eventDescription').value;
-    const location = document.getElementById('eventLocation').value;
-    const dateTime = document.getElementById('eventDateTime').value;
-
-    const res = await fetch(`${API_URL}/events`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token
-        },
-        body: JSON.stringify({ name, description, location, dateTime })
-    });
-    showResult('createEventResult', await res.json());
-});
 
 document.getElementById('loadEvents').addEventListener('click', async () => {
     const res = await fetch(`${API_URL}/events`);
@@ -64,7 +47,8 @@ document.getElementById('updateEventForm').addEventListener('submit', async (e) 
     const name = document.getElementById('updateEventName').value;
     const description = document.getElementById('updateEventDescription').value;
     const location = document.getElementById('updateEventLocation').value;
-    const dateTime = document.getElementById('updateEventDateTime').value;
+    const rawDate = document.getElementById('eventDateTime').value;
+    const dateTime = rawDate ? `${rawDate}:00Z` : '';
 
     const res = await fetch(`${API_URL}/events/${id}`, {
         method: 'PUT',
