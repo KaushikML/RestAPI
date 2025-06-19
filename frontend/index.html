@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Event API Frontend</title>
+</head>
+<body>
+    <h1>Event API Demo</h1>
+
+    <section id="signup">
+        <h2>Signup</h2>
+        <form id="signupForm">
+            <input type="email" id="signupEmail" placeholder="Email" required />
+            <input type="password" id="signupPassword" placeholder="Password" required />
+            <button type="submit">Signup</button>
+        </form>
+        <pre id="signupResult"></pre>
+    </section>
+
+    <section id="login">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="email" id="loginEmail" placeholder="Email" required />
+            <input type="password" id="loginPassword" placeholder="Password" required />
+            <button type="submit">Login</button>
+        </form>
+        <pre id="loginResult"></pre>
+    </section>
+
+    <section id="createEvent">
+        <h2>Create Event</h2>
+        <form id="createEventForm">
+            <input type="text" id="eventName" placeholder="Name" required />
+            <input type="text" id="eventDescription" placeholder="Description" required />
+            <input type="text" id="eventLocation" placeholder="Location" required />
+            <input type="datetime-local" id="eventDateTime" required />
+            <button type="submit">Create</button>
+        </form>
+        <pre id="createEventResult"></pre>
+    </section>
+
+    <section id="events">
+        <h2>Events</h2>
+        <button id="loadEvents">Load Events</button>
+        <pre id="eventsResult"></pre>
+    </section>
+
+    <section id="updateEvent">
+        <h2>Update Event</h2>
+        <form id="updateEventForm">
+            <input type="number" id="updateEventId" placeholder="Event ID" required />
+            <input type="text" id="updateEventName" placeholder="Name" required />
+            <input type="text" id="updateEventDescription" placeholder="Description" required />
+            <input type="text" id="updateEventLocation" placeholder="Location" required />
+            <input type="datetime-local" id="updateEventDateTime" required />
+            <button type="submit">Update</button>
+        </form>
+        <pre id="updateEventResult"></pre>
+    </section>
+
+    <section id="deleteEvent">
+        <h2>Delete Event</h2>
+        <form id="deleteEventForm">
+            <input type="number" id="deleteEventId" placeholder="Event ID" required />
+            <button type="submit">Delete</button>
+        </form>
+        <pre id="deleteEventResult"></pre>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
