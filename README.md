@@ -34,7 +34,7 @@ The server will listen on `http://localhost:8080`.
 > Every endpoint returns JSON. For protected routes, send the token returned from `/login` in the `Authorization` header.
 
 ## Testing with REST Client(Preferred) 
-
+### Replace `replace with the token you will get from Login either through REST Client,Frontend or CURL` with jwt token in every https where it is required 
 Inside `api-test/` you will find `.http` files for each endpoint. Install the **REST Client** extension in VS Code, open a `.http` file and click **Send Request** to try the API without crafting curl commands manually.
 
 ## Sample `curl` Usage
@@ -77,3 +77,4 @@ python3 -m http.server 8081
 ```
 
 Open `http://localhost:8081` in your browser to interact with the API via forms.
+

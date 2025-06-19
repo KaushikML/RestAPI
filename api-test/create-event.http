@@ -1,9 +1,9 @@
 POST http://localhost:8080/events
 content-type: application/json
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NTAzNjE1NDcsInVzZXJJZCI6Mn0.f1CGvuWxzSpMuQ9ngJ-pSiCzNCyUiEnmRWdfg-hzD28
+authorization: replace with the token you will get from Login either through REST Client,Frontend or CURL
 
 {
-  "name": "Test event",
+  "name": "Test event33",
   "description": "Test event!!!",
   "location": "A test location",
   "dateTime": "2025-01-01T15:30:00.000Z"
