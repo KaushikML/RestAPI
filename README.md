@@ -1,95 +1,97 @@
-# REST API with Go, Gin and SQLite
+# Event REST API
 
-This project implements a small REST API for managing events. It includes user authentication and CRUD endpoints for events, plus a simple browser frontend.
+A simple API built with Go and Gin providing user authentication and CRUD operations for events. Data is stored in SQLite.
 
-## Database
+## Quick Start
 
-The server uses SQLite and automatically creates `api.db` when started. Tables for users, events and registrations are created if they do not exist.
+1. Fetch dependencies:
 
-## Running the server
+   ```bash
+   go mod tidy
+   ```
+2. Run the server:
 
-```bash
-go run main.go
-```
+   ```bash
+   go run main.go
+   ```
 
-The server listens on `http://localhost:8080`.
+The server will listen on `http://localhost:8080`.
 
-## API Endpoints
+## API Overview
 
-All endpoints accept and return JSON. Authentication is handled via a JWT token returned from `/login` and must be sent in the `Authorization` header for protected routes.
+| Method | Endpoint               | Description                  |
+| ------ | ---------------------- | ---------------------------- |
+| POST   | `/signup`              | Register a new user          |
+| POST   | `/login`               | Authenticate and receive JWT |
+| GET    | `/events`              | List all events              |
+| GET    | `/events/:id`          | Get event by ID              |
+| POST   | `/events`              | Create a new event *(auth)*  |
+| PUT    | `/events/:id`          | Update an event *(auth)*     |
+| DELETE | `/events/:id`          | Delete an event *(auth)*     |
+| POST   | `/events/:id/register` | Register for event *(auth)*  |
+| DELETE | `/events/:id/register` | Cancel registration *(auth)* |
 
-### `POST /signup`
-Create a new user.
+> Every endpoint returns JSON. For protected routes, send the token returned from `/login` in the `Authorization` header.
 
-Request body:
-```json
-{ "email": "user@example.com", "password": "secret" }
-```
-Response example:
-```json
-{ "message": "User created successfully" }
-```
+## Testing with REST Client(Preferred) 
 
-### `POST /login`
-Authenticate a user and receive a token.
+Inside `api-test/` you will find `.http` files for each endpoint. Install the **REST Client** extension in VS Code, open a `.http` file and click **Send Request** to try the API without crafting curl commands manually.
 
-Request body is the same as `/signup`.
-Response example:
-```json
-{ "message": "Login successful!", "token": "<jwt>" }
-```
+## Sample `curl` Usage
 
-### `GET /events`
-Return all events.
+### `curl.exe` Raw Commands (Single-line)(DO NOT USE POWERSHELL , THERE IS SOME ISSUE WITH IT)
 
-### `GET /events/:id`
-Return a single event by id.
+These commands work in cmd.exe without line continuations:
 
-### `POST /events` *(authenticated)*
-Create a new event.
-
-Request body:
-```json
-{ "name": "Party", "description": "Fun", "location": "Town", "dateTime": "2025-01-01T15:30:00Z" }
-```
-
-### `PUT /events/:id` *(authenticated)*
-Update an existing event.
-
-### `DELETE /events/:id` *(authenticated)*
-Delete an event.
-
-### `POST /events/:id/register` *(authenticated)*
-Register the current user for an event.
-
-### `DELETE /events/:id/register` *(authenticated)*
-Cancel a registration.
-
-## Example `curl` commands
+**1. Signup**
 
 ```bash
-# create a user
-curl -X POST http://localhost:8080/signup -H 'Content-Type: application/json' \
-  -d '{"email":"user@example.com","password":"secret"}'
-
-# login
-TOKEN=$(curl -s -X POST http://localhost:8080/login -H 'Content-Type: application/json' \
-  -d '{"email":"user@example.com","password":"secret"}' | jq -r '.token')
-
-# create an event
-curl -X POST http://localhost:8080/events -H "Authorization: $TOKEN" \
-  -H 'Content-Type: application/json' \
-  -d '{"name":"Party","description":"Fun","location":"Town","dateTime":"2025-01-01T15:30:00Z"}'
+curl.exe -X POST http://localhost:8080/signup -H "Content-Type: application/json" --data "{\"email\":\"user3@example.com\",\"password\":\"secret\"}"
 ```
 
-## Frontend
+**2. Login** (to view full JSON response)
 
-A small frontend is located in the `frontend/` directory. Open `index.html` in a browser or serve the folder with a static file server:
+```bash
+curl.exe -v -X POST http://localhost:8080/login -H "Content-Type: application/json" --data "{\"email\":\"user3@example.com\",\"password\":\"secret\"}"
+```
+
+> Copy the value of the `token` field from the response.
+
+**3. Create Event**
+
+```bash
+curl.exe -X POST http://localhost:8080/events -H "Authorization: Bearer <YOUR_TOKEN_HERE>" -H "Content-Type: application/json" --data "{\"name\":\"Party\",\"description\":\"Fun\",\"location\":\"Town\",\"dateTime\":\"2025-01-01T15:30:00Z\"}"
+```
+
+
+
+
+
+## Simple Frontend
+
+A minimal frontend is located in `frontend/`. Serve it with:
 
 ```bash
 cd frontend
 python3 -m http.server 8081
 ```
 
-Then navigate to `http://localhost:8081` and use the forms to interact with the API.
+Open `http://localhost:8081` in your browser to interact with the API via forms.
 
+A minimal frontend is located in `frontend/`. Serve it with:
+
+```bash
+cd frontend
+python3 -m http.server 8081
+```
+
+Open `http://localhost:8081` in your browser to interact with the API via forms.
+
+A minimal frontend is located in `frontend/`. Serve it with:
+
+```bash
+cd frontend
+python3 -m http.server 8081
+```
+
+Open `http://localhost:8081` in your browser to interact with the API via forms.

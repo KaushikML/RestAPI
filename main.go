@@ -2,6 +2,7 @@ package main
 
 import (
 	"example.com/rest-api/db"
+	"example.com/rest-api/middlewares"
 	"example.com/rest-api/routes"
 	"github.com/gin-gonic/gin"
 )
@@ -9,6 +10,7 @@ import (
 func main() {
 	db.InitDB()
 	server := gin.Default()
+	server.Use(middlewares.CORSMiddleware())
 
 	routes.RegisterRoutes(server)
 
