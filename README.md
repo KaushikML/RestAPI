@@ -77,21 +77,3 @@ python3 -m http.server 8081
 ```
 
 Open `http://localhost:8081` in your browser to interact with the API via forms.
-
-A minimal frontend is located in `frontend/`. Serve it with:
-
-```bash
-cd frontend
-python3 -m http.server 8081
-```
-
-Open `http://localhost:8081` in your browser to interact with the API via forms.
-
-A minimal frontend is located in `frontend/`. Serve it with:
-
-```bash
-cd frontend
-python3 -m http.server 8081
-```
-
-Open `http://localhost:8081` in your browser to interact with the API via forms.
