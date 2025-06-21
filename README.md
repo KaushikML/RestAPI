@@ -93,5 +93,5 @@ After running, view overall coverage with:
 go tool cover -func=coverage.out
 ```
 
-The included tests achieve over **75%** coverage.
+
 
