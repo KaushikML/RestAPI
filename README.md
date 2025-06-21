@@ -132,6 +132,3 @@ This repository **exposes** its own REST API and does **not** consume any third�
 *The image above is the actual output of `go tool cover -func=coverage.out`, showing **75 %+** total statement coverage (see `docs/coverage.png`).*
 
 ---
-
-> **Pro‑tip:** regenerate the report anytime with
-> `go test ./... -coverprofile=coverage.out && go tool cover -func=coverage.out`
