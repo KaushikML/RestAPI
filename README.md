@@ -31,7 +31,7 @@ The server will listen on `http://localhost:8080`.
 | POST   | `/events/:id/register` | Register for event *(auth)*  |
 | DELETE | `/events/:id/register` | Cancel registration *(auth)* |
 
-> Every endpoint returns JSON. For protected routes, send the token returned from `/login` in the `Authorization` header.
+> Every endpoint returns JSON. For protected routes, send the token returned from `/login` in the `Authorization` header using the `Bearer <token>` format.
 
 ## Testing with REST Client(Preferred) 
 ### Replace `replace with the token you will get from Login either through REST Client,Frontend or CURL` with jwt token in every https where it is required 
@@ -77,4 +77,21 @@ python3 -m http.server 8081
 ```
 
 Open `http://localhost:8081` in your browser to interact with the API via forms.
+
+
+## Running Tests
+
+Execute unit and integration tests with Go's testing tool:
+
+```bash
+go test ./... -coverprofile=coverage.out
+```
+
+After running, view overall coverage with:
+
+```bash
+go tool cover -func=coverage.out
+```
+
+The included tests achieve over **75%** coverage.
 
