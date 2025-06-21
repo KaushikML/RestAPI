@@ -127,6 +127,7 @@ This repository **exposes** its own REST API and does **not** consume any third�
 ## 📊 Coverage Screenshot
 
 ![Coverage report](docs/coverage.png)
+![Total Report](docs/coverage2.png)
 
 *The image above is the actual output of `go tool cover -func=coverage.out`, showing **75 %+** total statement coverage (see `docs/coverage.png`).*
 
