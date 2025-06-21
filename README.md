@@ -78,3 +78,20 @@ python3 -m http.server 8081
 
 Open `http://localhost:8081` in your browser to interact with the API via forms.
 
+
+## Running Tests
+
+Execute unit and integration tests with Go's testing tool:
+
+```bash
+go test ./... -coverprofile=coverage.out
+```
+
+After running, view overall coverage with:
+
+```bash
+go tool cover -func=coverage.out
+```
+
+The included tests achieve around **73%** coverage.
+
