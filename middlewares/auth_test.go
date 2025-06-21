@@ -22,7 +22,7 @@ func TestAuthenticate(t *testing.T) {
 		t.Errorf("expected 401, got %d", w.Code)
 	}
 
-	// valid token
+	// valid token without Bearer prefix
 	token, _ := utils.GenerateToken("a", 1)
 	req = httptest.NewRequest(http.MethodGet, "/p", nil)
 	req.Header.Set("Authorization", token)
@@ -30,5 +30,14 @@ func TestAuthenticate(t *testing.T) {
 	r.ServeHTTP(w, req)
 	if w.Code != http.StatusOK {
 		t.Errorf("expected 200, got %d", w.Code)
+	}
+
+	// valid token with Bearer prefix
+	req = httptest.NewRequest(http.MethodGet, "/p", nil)
+	req.Header.Set("Authorization", "Bearer "+token)
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+	if w.Code != http.StatusOK {
+		t.Errorf("expected 200 with Bearer, got %d", w.Code)
 	}
 }

@@ -31,7 +31,7 @@ The server will listen on `http://localhost:8080`.
 | POST   | `/events/:id/register` | Register for event *(auth)*  |
 | DELETE | `/events/:id/register` | Cancel registration *(auth)* |
 
-> Every endpoint returns JSON. For protected routes, send the token returned from `/login` in the `Authorization` header.
+> Every endpoint returns JSON. For protected routes, send the token returned from `/login` in the `Authorization` header using the `Bearer <token>` format.
 
 ## Testing with REST Client(Preferred) 
 ### Replace `replace with the token you will get from Login either through REST Client,Frontend or CURL` with jwt token in every https where it is required 
@@ -93,5 +93,5 @@ After running, view overall coverage with:
 go tool cover -func=coverage.out
 ```
 
-The included tests achieve around **73%** coverage.
+
 
