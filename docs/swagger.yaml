@@ -1,0 +1,278 @@
+basePath: /
+definitions:
+  models.ErrorResponse:
+    properties:
+      message:
+        description: A human-readable description of the error
+        example: invalid request
+        type: string
+    type: object
+  models.Event:
+    properties:
+      dateTime:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      location:
+        type: string
+      name:
+        type: string
+      userID:
+        type: integer
+    required:
+    - dateTime
+    - description
+    - location
+    - name
+    type: object
+  models.EventIn:
+    properties:
+      dateTime:
+        example: "2025-07-01T10:00:00Z"
+        type: string
+      description:
+        example: Annual Gin meetup
+        type: string
+      location:
+        example: Delhi
+        type: string
+      name:
+        example: GinConf
+        type: string
+    type: object
+  models.Message:
+    properties:
+      message:
+        example: success
+        type: string
+    type: object
+  models.Token:
+    properties:
+      token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        type: string
+    type: object
+  models.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  models.UserLogin:
+    properties:
+      email:
+        example: alice@test.com
+        type: string
+      password:
+        example: secret
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    name: Kaushik
+    url: https://github.com/KaushikML/RestAPI
+  description: Simple Gin demo with JWT auth and SQLite storage
+  license:
+    name: MIT
+  title: Event REST API
+  version: "1.0"
+paths:
+  /events:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Event'
+            type: array
+      summary: List all events
+      tags:
+      - events
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: event data
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.EventIn'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      security:
+      - BearerAuth         // ← tells Swagger this route needs JWT: []
+      summary: Create a new event
+      tags:
+      - events
+  /events/{id}:
+    delete:
+      parameters:
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete an event
+      tags:
+      - events
+    get:
+      parameters:
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get event by ID
+      tags:
+      - events
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: updated event
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.EventIn'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update an event
+      tags:
+      - events
+  /events/{id}/register:
+    delete:
+      parameters:
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Cancel event registration
+      tags:
+      - events
+  /login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: email & password
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Token'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Log-in and receive JWT
+      tags:
+      - auth
+  /signup:
+    post:
+      consumes:
+      - application/json
+      description: Creates a user and returns a JWT
+      parameters:
+      - description: user credentials
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Sign-up a new user
+      tags:
+      - auth
+swagger: "2.0"

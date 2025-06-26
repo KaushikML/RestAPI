@@ -1,0 +1,59 @@
+# .github/workflows/ci.yml
+#
+# ──────────────────────────────────────────────────────────────
+#  Go + Keploy CI pipeline
+#  • Requires no Keploy Cloud credentials (purely local tests)
+#  • Assumes your SQLite DB lives at app.db in the repo root
+#  • Assumes your keploy test-cases live under ./keploy/
+# ──────────────────────────────────────────────────────────────
+name: Go CI + Keploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1 — check out the source
+    - name: Checkout source
+      uses: actions/checkout@v4
+
+    # 2 — install Go 1.22.x (matches your local dev version)
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.22'
+
+    # 3 — pull/verify dependencies & run normal unit-tests
+    - name: Download dependencies
+      run: go mod tidy
+
+    - name: Run unit tests
+      run: go test ./...
+
+    # 4 — start every run with a clean DB so signup/events tests get the IDs they expect
+    - name: Reset SQLite database
+      run: rm -f api.db   # <─ adjust filename/location if different
+
+    # 5 — install Keploy CLI v 2.x (enterprise line)
+    - name: Install Keploy CLI
+      run: curl -sL https://keploy.io/ent/install.sh | bash
+
+    # 6 — replay the local Keploy suite; fail job if any test fails
+    - name: Replay Keploy API tests
+      run: |
+        # start API in background
+        go run main.go &
+        SERVER_PID=$!
+        # give the server a moment to bind :8080
+        sleep 5
+
+        # run keploy in *local* mode (no --cloud / no --app-id needed)
+        keploy test -c "go run main.go" --delay 10
+
+        # stop background server to free the port
+        kill $SERVER_PID

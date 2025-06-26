@@ -135,3 +135,6 @@ This repository **exposes** its own REST API and does **not** consume any thirdâ
 
 > **Proâ€‘tip:** regenerate the report anytime with
 > `go test ./... -coverprofile=coverage.out && go tool cover -func=coverage.out`
+
+## CI / Keploy Status
+![Keploy Report](docs/keploy-report.png)
