@@ -8,6 +8,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// signup godoc
+// @Summary      Sign-up a new user
+// @Description  Creates a user and returns a JWT
+// @Tags         auth
+// @Accept       json
+// @Produce      json
+// @Param        payload  body      models.User     true  "user credentials"
+// @Success      201      {object}  models.Message
+// @Failure 404 {object} models.ErrorResponse
+// @Router       /signup [post]
 func signup(context *gin.Context) {
 	var user models.User
 
@@ -28,6 +38,15 @@ func signup(context *gin.Context) {
 	context.JSON(http.StatusCreated, gin.H{"message": "User created successfully"})
 }
 
+// login godoc
+// @Summary      Log-in and receive JWT
+// @Tags         auth
+// @Accept       json
+// @Produce      json
+// @Param        payload  body      models.UserLogin  true  "email & password"
+// @Success      200      {object}  models.Token
+// @Failure 404 {object} models.ErrorResponse
+// @Router       /login [post]
 func login(context *gin.Context) {
 	var user models.User
 

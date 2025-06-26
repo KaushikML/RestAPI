@@ -1,2 +1,2 @@
 DELETE http://localhost:8080/events/1/register
-authorization: replace with the token you will get from Login either through REST Client,Frontend or CURL
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXI2QGV4YW1wbGUuY29tIiwiZXhwIjoxNzUwOTY4ODI2LCJ1c2VySWQiOjExN30.Km2bzjse_RRvO9waXcCu6RlQ27kGphkn1Ur8OvAS51c

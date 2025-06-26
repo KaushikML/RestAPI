@@ -39,23 +39,6 @@ The server will listen on `http://localhost:8080`.
 
 Inside `api-test/` you will find `.http` files for each endpoint. Install the **REST Client** extension in VS Code, open a `.http` file and click **Send Request** to try the API without crafting curl commands manually.
 
-### 📁 Test Layout (read this before grading)
-
-> **Where are the tests?**
-> In Go it’s idiomatic to keep each test file right beside the code it exercises, so you won’t find a top-level `tests/` directory.
-
-| Package     | Code file(s)                            | Matching test file(s)                             |
-| ----------- | --------------------------------------- | ------------------------------------------------- |
-| `db/`       | `db.go`                                 | `db_test.go`                                      |
-| `models/`   | `user.go`, `event.go`                   | `event_test.go`,`user_test.go`                    |
-| `routes/`   | `events.go`,`routes.go`,`register.go`   | `integration_test.go`                             |
-| *(etc.)*    | —                                       | —                                                 |
-
-All `*_test.go` files are discovered automatically by **`go test ./...`**, which is why coverage is reported across the entire repo without needing a separate folder.
-
-*The only directory not picked up by `go test` is `api-test/`, which just contains `.http` scripts for manual smoke-testing via the VS Code REST Client.*
-
-
 ## Sample `curl` Usage
 
 ### `curl.exe` Raw Commands (Single‑line) *(DO NOT USE POWERSHELL; THERE IS SOME ISSUE WITH IT)*
@@ -149,3 +132,9 @@ This repository **exposes** its own REST API and does **not** consume any third�
 *The image above is the actual output of `go tool cover -func=coverage.out`, showing **75 %+** total statement coverage (see `docs/coverage.png`).*
 
 ---
+
+> **Pro‑tip:** regenerate the report anytime with
+> `go test ./... -coverprofile=coverage.out && go tool cover -func=coverage.out`
+
+## CI / Keploy Status
+![Keploy Report](docs/keploy-report.png)

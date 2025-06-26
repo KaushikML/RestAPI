@@ -1,0 +1,14 @@
+curl -X POST  https://33b0-106-219-91-45.ngrok-free.app/signup \
+     -H "Content-Type: application/json" \
+     -d '{"email":"alice@test.com","password":"secret"}'
+
+curl -X POST  https://33b0-106-219-91-45.ngrok-free.app/login \
+     -H "Content-Type: application/json" \
+     -d '{"email":"alice@test.com","password":"secret"}'
+
+curl -X GET   https://33b0-106-219-91-45.ngrok-free.app/events
+
+curl -X POST  https://33b0-106-219-91-45.ngrok-free.app/events \
+     -H "Authorization: Bearer {{TOKEN}}" \
+     -H "Content-Type: application/json" \
+     -d '{"name":"GinConf","location":"Delhi","dateTime":"2025-07-01T10:00:00Z"}'

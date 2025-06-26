@@ -8,6 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// getEvents godoc
+// @Summary      List all events
+// @Tags         events
+// @Produce      json
+// @Success      200  {array}   models.Event
+// @Router       /events [get]
 func getEvents(context *gin.Context) {
 	events, err := models.GetAllEvents()
 	if err != nil {
@@ -17,6 +23,14 @@ func getEvents(context *gin.Context) {
 	context.JSON(http.StatusOK, events)
 }
 
+// GetEvent godoc
+// @Summary      Get event by ID
+// @Tags         events
+// @Produce      json
+// @Param        id   path      int            true  "Event ID"
+// @Success      200  {object}  models.Event
+// @Failure 404 {object} models.ErrorResponse
+// @Router       /events/{id} [get]
 func getEvent(context *gin.Context) {
 	eventId, err := strconv.ParseInt(context.Param("id"), 10, 64)
 	if err != nil {
@@ -34,6 +48,16 @@ func getEvent(context *gin.Context) {
 	context.JSON(http.StatusOK, event)
 }
 
+// createEvent godoc
+// @Summary      Create a new event
+// @Tags         events
+// @Security     BearerAuth         // ← tells Swagger this route needs JWT
+// @Accept       json
+// @Produce      json
+// @Param        payload  body      models.EventIn  true  "event data"
+// @Success      201      {object}  models.Event
+// @Failure 404 {object} models.ErrorResponse
+// @Router       /events [post]
 func createEvent(context *gin.Context) {
 	var event models.Event
 	err := context.ShouldBindJSON(&event)
@@ -56,6 +80,17 @@ func createEvent(context *gin.Context) {
 	context.JSON(http.StatusCreated, gin.H{"message": "Event created!", "event": event})
 }
 
+// updateEvent godoc
+// @Summary      Update an event
+// @Tags         events
+// @Security     BearerAuth
+// @Accept       json
+// @Produce      json
+// @Param        id       path      int            true  "Event ID"
+// @Param        payload  body      models.EventIn  true  "updated event"
+// @Success      200      {object}  models.Event
+// @Failure 404 {object} models.ErrorResponse
+// @Router       /events/{id} [put]
 func updateEvent(context *gin.Context) {
 	eventId, err := strconv.ParseInt(context.Param("id"), 10, 64)
 	if err != nil {
@@ -93,6 +128,15 @@ func updateEvent(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{"message": "Event updated successfully!"})
 }
 
+// deleteEvent godoc
+// @Summary      Delete an event
+// @Tags         events
+// @Security     BearerAuth
+// @Produce      json
+// @Param        id  path  int  true  "Event ID"
+// @Success      204  "No Content"
+// @Failure 404 {object} models.ErrorResponse
+// @Router       /events/{id} [delete]
 func deleteEvent(context *gin.Context) {
 	eventId, err := strconv.ParseInt(context.Param("id"), 10, 64)
 	if err != nil {
