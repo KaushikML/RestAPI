@@ -1,4 +1,4 @@
-# Event REST API
+# Event REST API(With Testing)
 
 A simple API built with Go and Gin providing user authentication and CRUD operations for events. Data is stored in SQLite.
 
